@@ -1,5 +1,6 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Redirect, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { Request } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -7,6 +8,7 @@ import { AuthService } from './auth/auth.service';
 import { JwtGuard } from './auth/jwt-auth.guard';
 
 @Controller()
+@ApiTags('home')
 export class AppController {
   constructor(
     private readonly appService: AppService,
@@ -14,6 +16,9 @@ export class AppController {
   ) {}
 
   @Get()
+  @Redirect('/swagger', 301)
+  redirectSwagger() {}
+  @Get('hello')
   getHello(): string {
     return this.appService.getHello();
   }
