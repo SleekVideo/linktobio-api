@@ -36,4 +36,9 @@ export class Profile {
     default: null,
   })
   tiktok: string;
+
+  @Column({
+    default: null,
+  })
+  avatarUrl: string;
 }

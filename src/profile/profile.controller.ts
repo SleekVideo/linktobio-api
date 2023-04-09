@@ -1,13 +1,18 @@
 import {
+  Body,
   Controller,
   Get,
   NotFoundException,
   Param,
+  Post,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { ProfileService } from './profile.service';
-
+import { UploadAvatarDto } from './dto/upload-avatar.dto';
 @ApiTags('profile')
 @Controller('profile')
 export class ProfileController {
@@ -19,5 +24,17 @@ export class ProfileController {
       return new NotFoundException();
     }
     return profile;
+  }
+
+  @Post('upload-avatar')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadAvatar(
+    @Body() data: UploadAvatarDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.log(data, file);
+    return { data };
+    // return await this._profileService.uploadAvatar(data.slug, file);
   }
 }
