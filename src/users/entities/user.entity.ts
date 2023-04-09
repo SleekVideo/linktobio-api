@@ -5,12 +5,26 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
   firstName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
   lastName: string;
 
-  @Column({ default: true })
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
+  email: string;
+  @Column({
+    type: 'bool',
+    default: false,
+  })
   isActive: boolean;
 }
