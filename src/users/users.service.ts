@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { toUserDto } from 'src/shared/mapper';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
-export type User = any;
+import { UserDto } from './dto/user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -17,12 +18,14 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(options?: any): Promise<UserDto> {
+    const user = await this.usersRepository.findOne(options);
+    return toUserDto(user);
   }
 
   findOneByUsername(username: string) {
-    return this.users.find((user) => user.username == username);
+    // return this.users.find((user) => user.username == username);
+    return '';
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
