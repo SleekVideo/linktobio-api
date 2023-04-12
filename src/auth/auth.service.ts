@@ -66,7 +66,7 @@ export class AuthService {
     password?: string;
   }): Promise<UserDto> {
     if (!payload.token && !payload.email) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized123', HttpStatus.UNAUTHORIZED);
     }
     if (payload.token) {
       const token = await this.jwtService.verify(payload.token);
